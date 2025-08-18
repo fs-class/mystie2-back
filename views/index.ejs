@@ -1,0 +1,156 @@
+<%-include('header.ejs')%>
+
+
+    <!-- section1: First Parallax Image with Logo Text -->
+    <div id="sec1" class="container-fluid">
+        <div class="row justify-content-center align-items-center h-100">
+            <h1 class="text-center"><span class="bg-dark text-white fs-4 ls10 py-3 px-5">MY <span
+                        class="d-none d-sm-inline">WEBSITE</span> LOGO</span></h1>
+        </div>
+    </div>
+
+    <!-- section2: about me -->
+    <div id="sec2" class="container-fluid pt-5">
+        <div class="text-center my-5">
+            <h3 class="mb-3">ABOUT ME</h3>
+            <em>코드를 짜며, 나도 성장한다.</em>
+        </div>
+        <!-- .sec의 width:920px; -->
+        <div class="container sec">
+
+            <div class="overflow-hidden">
+                <!-- basic profile -->
+                <p class="motion">무대 밖에서는 조용히 배우고 성장하는 시간이 더 소중하게 느껴집니다.
+                    틈날 때마다 풍경과 일상을 사진으로 기록하며, 저만의 감각을 다듬어가고 있어요.
+                    이런 시각적인 관심은 자연스럽게 UI/UX에 대한 흥미로 이어졌고,
+                    더 많은 분들과 더 나은 경험을 나누고 싶다는 마음으로 웹 프론트엔드 개발 공부를 시작하게 되었습니다.
+
+                    지금은 HTML, CSS, JavaScript를 비롯해 React 등 다양한 프론트엔드 기술을 하나씩 익히며
+                    디자인과 기능이 조화를 이루는 웹을 만들기 위해 노력하고 있습니다.
+                    이 웹사이트는 저의 사진과 개발 과정을 함께 담은 공간으로,
+                    무대 위의 저와는 또 다른, 조금 더 진솔한 저를 만날 수 있는 곳이기도 해요.
+                    천천히, 꾸준히 채워가 보겠습니다.</p>
+                <div class="row">
+                    <div class="col-sm text-center mb-5">
+                        <b class="my-5 my-lg-0 d-block"><i class="fa-solid fa-user-tie me-2"></i> 공유</b>
+                        <div id="my_pic" class="motion"><img src="/images/avatar_hat.jpg" alt="내 사진" class="w-100">
+                        </div>
+                    </div>
+                    <p class="col-sm motion">안녕하세요! 제 웹사이트에 방문해 주셔서 진심으로 감사합니다.
+                        저는 배우로 활동하며, 다양한 역할 속에서 끊임없이 저 자신을 탐색하고 표현하는 일을 하고 있습니다.
+                        무대 위에서의 찰나의 순간들도 소중하지만, 그만큼 일상에서의 조용한 시간도 저에게는 매우 특별한 의미를 갖고 있어요. 그래서 저는 연기 외에도 다양한 방식으로 스스로를
+                        표현하고
+                        싶었고, 그중 하나가 바로 사진과 웹이라는 새로운 영역이었습니다. 앞으로 이곳에는 제가 도전하는 다양한 프로젝트, 사진 작업, 그리고 느낀 점들을 차곡차곡 쌓아갈
+                        예정입니다. 아직
+                        많이 부족하지만, 꾸준히 성장해 나가는 모습을 함께 지켜봐 주시면 감사하겠습니다.
+                        방문해 주셔서 다시 한 번 감사드리며, 자주 들러 주세요. :)</p>
+                </div>
+            </div>
+
+            <!-- skill progressbar -->
+            <p class="text-center mt-5 mb-2">내가 잘하는 것들:</p>
+            <div id="skill" class="mb-5 pb-3">
+                <p class="mt-3 mb-1"><i class="fa-solid fa-clapperboard"></i> Planning for web design</p>
+                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar text-bg-secondary fs-5" style="width: 75%" data-rate="75">75%</div>
+                </div>
+                <p class="mt-3 mb-1"><i class="fa-regular fa-image"></i> Photoshop + <i
+                        class="fa-brands fa-square-figma"></i> Figma</p>
+                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar text-bg-secondary fs-5" style="width: 95%" data-rate="95">95%</div>
+                </div>
+                <p class="mt-3 mb-1"><i class="fa-brands fa-html5"></i> HTML + <i class="fa-brands fa-css3-alt"></i> CSS
+                </p>
+                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar text-bg-secondary fs-5" style="width: 90%" data-rate="90">90%</div>
+                </div>
+                <p class="mt-3 mb-1"><i class="fa-solid fa-code"></i> JavaScript + <i class="fa-brands fa-react"></i>
+                    React</p>
+                <div class="progress" role="progressbar" aria-label="Success example" aria-valuenow="25"
+                    aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-bar text-bg-secondary fs-5" style="width: 80%" data-rate="80">80%</div>
+                </div>
+            </div><!-- //skill end -->
+        </div><!-- //.container -->
+
+        <!-- Achievements counter -->
+        <div class="row text-bg-secondary p-5 p-sm-3 text-center">
+            <div class="col-sm my-3"><span class="d-block fs-4 counter" data-rate="4">0+</span>Personal Projects
+                Completed</div>
+            <div class="col-sm my-3"><span class="d-block fs-4 counter" data-rate="1">0+</span>Team Collaborations</div>
+            <div class="col-sm my-3"><span class="d-block fs-4 counter" data-rate="15">0+</span>UI Design for Web Pages
+            </div>
+            <div class="col-sm my-3"><span class="d-block fs-4 counter" data-rate="3">0+</span>National Technical
+                Qualification</div>
+        </div>
+    </div><!-- //#sec2.end -->
+
+    <!-- section3: portfolio -->
+    <div id="sec3" class="container-fluid text-center px-0 pb-5">
+        <div class="parallax_bg d-flex justify-content-center align-items-center">
+            <h2 class="text-white ls10 fs-1">PORTFOLIO</h2>
+        </div>
+        <div class="container sec pt-5 px-4">
+            <div class="text-center my-5">
+                <h3 class="mb-3">MY WORK</h3>
+                <p><em>최근 작업 중 일부를 소개합니다.</em><em>이미지를 클릭하면 크게 볼 수 있어요.</em><br>
+                    <em>클릭 후, 이미지 왼쪽 하단에 <mark>웹사이트 방문하기</mark>를 누르면 포트폴리오 구현 결과를 확인할 수 있습니다.</em>
+                </p>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 p-2"><a href="images/project/steam.png" data-lightbox="gallery" data-title='<a href="https://junhuyk.netlify.app/" target="_blank" style="color:yellow; text-decoration:underline;">웹사이트 방문하기</a>'><img class="border border-secondary-subtle" src="images/p1.jpg" alt="stream"></a></div>
+                <div class="col-12 col-sm-6 col-lg-3 p-2"><a href="images/project/srt.png" data-lightbox="gallery" data-title='<a href="https://surimshim.netlify.app/" target="_blank" style="color:yellow; text-decoration:underline;">웹사이트 방문하기</a>'><img class="border border-secondary-subtle" src="images/p2.jpg" alt="SRT"></a></div>
+                <div class="col-12 col-sm-6 col-lg-3 p-2"><a href="images/project/tourist.png" data-lightbox="gallery" data-title='<a href="https://tourist-in-tour.netlify.app/" target="_blank" style="color:yellow; text-decoration:underline;">웹사이트 방문하기</a>'><img class="border border-secondary-subtle" src="images/project/tourist_thumb.png" alt="Tourist"></a></div>
+                <div class="col-12 col-sm-6 col-lg-3 p-2"><a href="images/project/megabox.png" data-lightbox="gallery" data-title='<a href="https://megabox814.netlify.app/" target="_blank" style="color:yellow; text-decoration:underline;">웹사이트 방문하기</a>'><img class="border border-secondary-subtle" src="images/project/megabox_thumb.png" alt="Hanyang"></a></div>
+                <div class="col-12 col-sm-6 col-lg-3 p-2"><a href="images/project/mysite.png" data-lightbox="gallery" data-title='<a href="https://mysite-bs5.netlify.app/" target="_blank" style="color:yellow; text-decoration:underline;">웹사이트 방문하기</a>'><img class="border border-secondary-subtle" src="images/project/mysite_thumb.png" alt="My Site Version #1"></a></div>
+                <div class="col-12 col-sm-6 col-lg-3 p-2"><a href="images/project/hana.png" data-lightbox="gallery" data-title='<a href="https://hanatour.netlify.app/"" target="_blank" style="color:yellow; text-decoration:underline;">웹사이트 방문하기</a>'><img class="border border-secondary-subtle" src="images/project/hana_thumb.png" alt="hanatour"></a></div>
+                <div class="col-12 col-sm-6 col-lg-3 p-2"><a href="images/project/megacoffee.jpg" data-lightbox="gallery" data-title='<a href="https://megamgccoffee.netlify.app/" target="_blank" style="color:yellow; text-decoration:underline;">웹사이트 방문하기</a>'><img class="border border-secondary-subtle" src="images/project/megacoffee_thumb.png" alt="MegaMGCCoffee"></a></div>
+                <div class="col-12 col-sm-6 col-lg-3 p-2"><a href="#"><img src="https://placehold.co/400x300?text=preparing...&font=Lato" alt="준비중"></a></div>
+            </div><!-- //.row -->
+            <div class="text-center my-5"><button type="button" class="btn btn-danger px-5">더보기</button></div>
+        </div>
+    </div>
+    <!-- section4: contact us -->
+    <div id="sec4" class="container-fluid px-0 pb-5">
+        <div class="parallax_bg d-flex justify-content-center align-items-center">
+            <h2 class="text-white ls10 fs-1">CONTACT</h2>
+        </div>
+        <div class="container py-5 px-4 mb-5">
+            <div class="text-center my-5">
+                <h3 class="mb-3">WHERE I WORK</h3>
+                <p><em>귀사(貴社)의 피드백을 기다리고 있습니다!</em></p>
+            </div>
+            <div class="row pb-5">
+                <div class="col-sm pe-4 mb-3">
+                    <img src="images/map.jpg" alt="작업장 위치" class="rounded">
+                </div>
+                <div class="col-sm">
+                    <div>
+                        <i class="fa-solid fa-location-dot me-3"></i> 경기도, 대한민국<br>
+                        <i class="fa-solid fa-phone me-3"></i> Phone: +82 12345678<br>
+                        <i class="fa-solid fa-envelope me-3"></i> Email: mail@mail.com
+                    </div>
+                    <p class="mt-3">메시지를 남겨주시면 연락드리겠습니다.</p>
+                    <form action="contactProc" method="post">
+                        <input type="text" name="name" required placeholder="이름을 입력하세요." class="w-100 mb-2 py-1">
+                        <input type="tel" name="phone" required placeholder="전화번호를 입력하세요." class="w-100 mb-2 py-1">
+                        <input type="email" name="email" required placeholder="메일을 입력하세요." class="w-100 mb-2 py-1">
+                        <textarea name="memo" placeholder="메시지를 입력하세요." rows="5" class="w-100"></textarea>
+                        <div class="text-end">
+                            <button class="btn btn-dark px-3 mt-3"><i class="fa-solid fa-paper-plane me-3"></i>메시지
+                                보내기</button>
+                        </div>
+                    </form>
+                </div>
+            </div> <!-- //.row -->
+        </div> <!-- //.container -->
+    </div><!-- //#sec4 -->
+
+
+    <!-- 로그인 모달 삽입 -->
+    <!-- <%- include('login.ejs') %> -->
+
+<%-include('footer.ejs')%>

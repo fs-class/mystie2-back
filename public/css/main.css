@@ -1,0 +1,116 @@
+@charset "utf-8";
+@import url('reset.css');
+@import url('contactList.css');
+
+/* typo */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+body {
+    font-family: "Lato", sans-serif;
+    line-height: 1.8;
+}
+.ls10 {
+    letter-spacing: 10px;
+}
+
+p,
+footer a {
+    font-family: 'Pretendard-Regular', Helvetica, sans-serif;
+}
+
+/* Parallax Scrolling Image */
+#sec1 {
+    height: 100vh;
+    background: url(../images/parallax1.jpg) no-repeat 50% 50%/cover fixed;
+}
+#sec3 .parallax_bg {
+    height: 400px;
+    background: url(../images/parallax4.jpg) no-repeat 50% 50%/cover fixed;
+}
+#sec4 .parallax_bg {
+    height: 400px;
+    background: url(../images/parallax3.jpg) no-repeat 50% 50%/cover fixed;
+}
+
+/* section common */
+.sec {
+    max-width: 920px;
+}
+
+/* skill progressbar */
+#skill p {
+    letter-spacing: 4px;
+}
+.progress {
+    height:35px;
+}
+
+/* footer */
+footer:hover {
+    background: #111 !important;
+}
+
+
+/* 2025-08-12 추가 */
+#mainNavbar {
+    transform:translateY(-100%);
+}
+.navbar-scrolled {
+    background-color: white !important;
+    transition: 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transform:translateY(0) !important;
+}
+
+
+/* skill */
+.progress-bar {
+    transition: width 0.15s linear;
+}
+
+
+
+
+/* 전체 스크롤바 설정 */
+::-webkit-scrollbar {
+  width: 0px; /* 세로 스크롤바 너비 */
+  height: 12px; /* 가로 스크롤바 높이 */
+}
+
+/* 스크롤바 트랙 (배경) */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* 스크롤바 핸들 (움직이는 부분) */
+::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  border: 3px solid #f1f1f1;
+}
+
+/* 스크롤바 핸들 hover 시 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+/* Firefox 지원 */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(136,136,136,0.3) transparent;
+}
+
+
+/* 2025-08-18 추가 */
+/* scroll motion */
+.motion {
+    position: relative;
+    top: 100px;
+    opacity: 0;
+}

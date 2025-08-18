@@ -1,0 +1,49 @@
+<%-include('header.ejs')%>
+
+    <div id="contact_list">
+        <h1>문의 목록</h1>
+        <table>
+            <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <tr>
+                <th>ID</th>
+                <th>이름</th>
+                <th>전화번호</th>
+                <th>이메일</th>
+                <th>메모</th>
+                <th>작성일</th>
+                <th>삭제</th>
+            </tr>
+            <% contacts.forEach(function(contact) { %>
+                <tr>
+                    <td>
+                        <%= contact.idx %>
+                    </td>
+                    <td>
+                        <%= contact.name %>
+                    </td>
+                    <td>
+                        <%= contact.phone %>
+                    </td>
+                    <td>
+                        <%= contact.email %>
+                    </td>
+                    <td><%- contact.memo.replaceAll('\n','<br>') %></td>
+                    <td>
+                        <%= contact.regdate %>
+                    </td>
+                    <td><a href="/contactDelete?idx=<%=contact.idx%>" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+                    </td>
+                </tr>
+                <% }); %>
+        </table>
+    </div>
+
+    <%-include('footer.ejs')%>

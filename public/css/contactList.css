@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+#contact_list {
+    text-align: center;
+    padding: 100px 0;
+}
+#contact_list h1 {
+    margin-bottom: 50px;
+}
+table {
+    max-width: 1440px;
+    margin: 0 auto;
+}
+table, td, th {
+    border: 1px solid #111;
+}
+col {
+    width: 10%;
+}
+col:nth-of-type(5) {
+    width: 40%;
+}
