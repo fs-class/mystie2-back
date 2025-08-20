@@ -1,5 +1,5 @@
 {
-  "name": "mysite2-back",
+  "name": "my-express-app",
   "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
@@ -8,7 +8,8 @@
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
-    "mariadb": "^3.4.5"
+    "mariadb": "^3.4.5",
+    "serverless-http": "^3.2.0"
   },
   "scripts": {
     "start": "node app.js"

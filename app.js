@@ -4,34 +4,15 @@ const express = require('express');
 const mariadb = require('mariadb');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const path = require('path');
-// const ejs = require('ejs');
+const ejs = require('ejs');
 const app = express();
-// const port = 3000;
+const port = 3000;
 
-// EJS 설정
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-// app.set('views', './views');
-// 미들웨어
+app.set('views', './views');
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
-// app.use(express.static('public'))
-// app.use(session({secret: 'haha', cookie: {maxAge: 60000}, resave: true, saveUninitialized: true}))
-
-app.set('trust proxy', 1); // Render 프록시 환경에서 세션 동작 보장
-
-app.use(session({
-  secret: process.env.SESSION_SECRET || "keyboard cat",
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    secure: process.env.NODE_ENV === "production", // Render = true
-    httpOnly: true,
-    sameSite: "lax"
-  }
-}));
-
+app.use(express.static('public'))
+app.use(session({secret: 'haha', cookie: {maxAge: 60000}, resave: true, saveUninitialized: true}))
 
 app.use((req, res, next)=> {
     res.locals.user_id = "";
@@ -44,7 +25,7 @@ app.use((req, res, next)=> {
     next()
 })
 
-// DB 연결 풀
+
 const pool = mariadb.createPool({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -53,16 +34,6 @@ const pool = mariadb.createPool({
     database: process.env.DB_NAME,
     connectionLimit: 5,
 });
-
-// 로그인 여부 미들웨어
-function isLoggedIn(req, res, next) {
-    if (req.session.member) {
-        next(); // 로그인된 상태 → 다음 미들웨어/라우트 실행
-    } else {
-        res.send("<script>alert('로그인이 필요합니다.'); location.href='/';</script>");
-    }
-}
-
 
 // 라우팅
 app.get('/', (req, res) => {
@@ -95,7 +66,13 @@ app.post('/contactProc', async (req, res) => {
 });
 
 
-
+function isLoggedIn(req, res, next) {
+    if (req.session.member) {
+        next(); // 로그인된 상태 → 다음 미들웨어/라우트 실행
+    } else {
+        res.send("<script>alert('로그인이 필요합니다.'); location.href='/';</script>");
+    }
+}
 
 app.get('/contactList', isLoggedIn, async (req, res) => {
     let conn;
@@ -135,9 +112,9 @@ app.get('/contactDelete', async (req, res) => {
 });
 
 
-// app.get('/login', (req, res) => {
-//     res.render('/')
-// })
+app.get('/login', (req, res) => {
+    res.render('/')
+})
 
 app.post('/loginProc', async (req, res) => {
     const { user_id, pw } = req.body;
@@ -175,13 +152,6 @@ app.get('/logout', async (req, res) => {
 
 
 
-// app.listen(port, () => {
-//     console.log(`서버가 실행되었습니다. 접속 주소: http://localhost:${port}`)
-// })
-
-
-// Render가 제공하는 포트 사용
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(port, () => {
+    console.log(`서버가 실행되었습니다. 접속 주소: http://localhost:${port}`)
+})
