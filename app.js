@@ -1,157 +1,161 @@
+// app.js
 require('dotenv').config();
 
 const express = require('express');
-const mariadb = require('mariadb');
-const bodyParser = require('body-parser');
 const session = require('express-session');
-const ejs = require('ejs');
+const path = require('path');
+const { Pool } = require('pg');
+
 const app = express();
-const port = 3000;
 
+// ===== EJS / 미들웨어 =====
 app.set('view engine', 'ejs');
-app.set('views', './views');
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static('public'))
-app.use(session({secret: 'haha', cookie: {maxAge: 60000}, resave: true, saveUninitialized: true}))
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use((req, res, next)=> {
-    res.locals.user_id = "";
-    res.locals.name = "";
+// Render(프록시) 환경에서 세션/쿠키 동작 보장
+app.set('trust proxy', 1);
 
-    if (req.session.member) {
-        res.locals.user_id = req.session.member.user_id
-        res.locals.name = req.session.member.name
-    }
-    next()
-})
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'keyboard cat',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV === 'production', // 배포 시 HTTPS에서만 쿠키
+      httpOnly: true,
+      sameSite: 'lax',
+    },
+  })
+);
 
-
-const pool = mariadb.createPool({
-    host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    connectionLimit: 5,
+// EJS 전역 사용자 정보
+app.use((req, res, next) => {
+  res.locals.user_id = '';
+  res.locals.name = '';
+  if (req.session.member) {
+    res.locals.user_id = req.session.member.user_id;
+    res.locals.name = req.session.member.name;
+  }
+  next();
 });
 
-// 라우팅
-app.get('/', (req, res) => {
-
-    console.log(req.session.member)
-
-    res.render('index') // ./views/index.ejs
-})
-
-// app.get('/contact', (req, res) => {
-//     res.render('contact')
-// })
-
-app.post('/contactProc', async (req, res) => {
-    const { name, phone, email, memo } = req.body;
-    
-    let conn;
-    try {
-        conn = await pool.getConnection();
-        const sql = `INSERT INTO contact (name, phone, email, memo, regdate) VALUES (?, ?, ?, ?, NOW())`;
-        await conn.query(sql, [name, phone, email, memo]);
-
-        res.send("<script>alert('문의사항이 등록되었습니다.'); location.href='/';</script>");
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("<script>alert('오류가 발생했습니다.'); location.href='/';</script>");
-    } finally {
-        if (conn) conn.release();
-    }
+// ===== PostgreSQL Pool =====
+// Render PostgreSQL는 SSL이 필요한 경우가 많아 기본 포함
+const pool = new Pool({
+  host: process.env.DB_HOST,      // ex) mydb-postgres.render.com
+  port: Number(process.env.DB_PORT) || 5432,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  ssl:
+    process.env.DB_SSL?.toLowerCase() === 'false'
+      ? false
+      : { rejectUnauthorized: false }, // 필요 없으면 DB_SSL=false 로 끄기
 });
 
-
+// ===== 유틸 =====
 function isLoggedIn(req, res, next) {
-    if (req.session.member) {
-        next(); // 로그인된 상태 → 다음 미들웨어/라우트 실행
-    } else {
-        res.send("<script>alert('로그인이 필요합니다.'); location.href='/';</script>");
-    }
+  if (req.session.member) return next();
+  return res.send(
+    "<script>alert('로그인이 필요합니다.'); location.href='/login';</script>"
+  );
 }
 
-app.get('/contactList', isLoggedIn, async (req, res) => {
-    let conn;
-
-    try {
-        conn = await pool.getConnection();
-
-        const sql = `SELECT * FROM contact ORDER BY idx DESC`;
-        const results = await conn.query(sql);
-
-        res.render('contactList', { contacts: results }); // ejs로 전달
-    } catch (err) {
-        console.error('DB 조회 오류:', err);
-        res.status(500).send('DB 조회 중 오류 발생');
-    } finally {
-        if (conn) conn.release();
-    }
+// ===== 라우팅 =====
+app.get('/', async (req, res) => {
+  // 메인
+  res.render('index'); // ./views/index.ejs
 });
 
-app.get('/contactDelete', async (req, res) => {
-    const idx = req.query.idx;
-    let conn;
-
-    try {
-        conn = await pool.getConnection();
-
-        const sql = `DELETE FROM contact WHERE idx = ?`;
-        await conn.query(sql, [idx]);
-
-        res.send("<script>alert('삭제되었습니다.'); location.href='/contactList';</script>");
-    } catch (err) {
-        console.error('DB 삭제 오류:', err);
-        res.status(500).send("<script>alert('삭제 중 오류가 발생했습니다.'); location.href='/contactList';</script>");
-    } finally {
-        if (conn) conn.release();
-    }
-});
-
-
+// 로그인 페이지
 app.get('/login', (req, res) => {
-    res.render('/')
-})
+  res.render('login'); // ./views/login.ejs
+});
 
+// 로그인 처리 (평문 비번 예시: 실제 운영은 bcrypt 권장)
 app.post('/loginProc', async (req, res) => {
-    const { user_id, pw } = req.body;
+  const { user_id, pw } = req.body;
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM member WHERE user_id = $1 AND pw = $2',
+      [user_id, pw]
+    );
 
-    let conn;
-    try {
-        conn = await pool.getConnection();
-
-        const sql = `SELECT * FROM member WHERE user_id = ? AND pw = ?`;
-        const result = await conn.query(sql, [user_id, pw]);
-
-        if (result.length > 0) {
-            // 로그인 성공
-            console.log(result[0])
-
-            req.session.member = result[0]
-
-            res.send("<script>alert('로그인 되었습니다.'); location.href='/';</script>");
-        } else {
-            // 로그인 실패
-            res.send("<script>alert('아이디 또는 비밀번호가 틀렸습니다.'); location.href='/';</script>");
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).send("<script>alert('오류가 발생했습니다.'); location.href='/';</script>");
-    } finally {
-        if (conn) conn.release();
+    if (rows.length > 0) {
+      req.session.member = rows[0];
+      return res.send(
+        "<script>alert('로그인 되었습니다.'); location.href='/';</script>"
+      );
     }
+    return res.send(
+      "<script>alert('아이디 또는 비밀번호가 틀렸습니다.'); location.href='/login';</script>"
+    );
+  } catch (err) {
+    console.error('loginProc error:', err);
+    return res
+      .status(500)
+      .send("<script>alert('오류가 발생했습니다.'); location.href='/login';</script>");
+  }
 });
 
-app.get('/logout', async (req, res) => {
-    req.session.member = null
-    res.send("<script> alert('로그아웃 되었습니다.'); location.href='/'; </script>")
+// 로그아웃
+app.get('/logout', (req, res) => {
+  req.session.member = null;
+  res.send("<script>alert('로그아웃 되었습니다.'); location.href='/';</script>");
 });
 
+// 문의 등록
+app.post('/contactProc', async (req, res) => {
+  const { name, phone, email, memo } = req.body;
+  try {
+    await pool.query(
+      'INSERT INTO contact (name, phone, email, memo, regdate) VALUES ($1, $2, $3, $4, NOW())',
+      [name, phone, email, memo]
+    );
+    res.send(
+      "<script>alert('문의사항이 등록되었습니다.'); location.href='/';</script>"
+    );
+  } catch (err) {
+    console.error('contactProc error:', err);
+    res
+      .status(500)
+      .send("<script>alert('오류가 발생했습니다.'); location.href='/';</script>");
+  }
+});
 
+// 문의 목록 (로그인 필요)
+app.get('/contactList', isLoggedIn, async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      'SELECT * FROM contact ORDER BY idx DESC'
+    );
+    res.render('contactList', { contacts: rows });
+  } catch (err) {
+    console.error('contactList error:', err);
+    res.status(500).send('DB 조회 중 오류 발생');
+  }
+});
 
-app.listen(port, () => {
-    console.log(`서버가 실행되었습니다. 접속 주소: http://localhost:${port}`)
-})
+// 문의 삭제
+app.get('/contactDelete', isLoggedIn, async (req, res) => {
+  const idx = req.query.idx;
+  try {
+    await pool.query('DELETE FROM contact WHERE idx = $1', [idx]);
+    res.send(
+      "<script>alert('삭제되었습니다.'); location.href='/contactList';</script>"
+    );
+  } catch (err) {
+    console.error('contactDelete error:', err);
+    res
+      .status(500)
+      .send("<script>alert('삭제 중 오류가 발생했습니다.'); location.href='/contactList';</script>");
+  }
+});
+
+// ===== 서버 시작 =====
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
