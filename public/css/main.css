@@ -231,6 +231,7 @@ footer a {
 
 /* Parallax Scrolling Image */
 #sec1 {
+    z-index: 1;
     height: 100vh;
     background: url(../images/parallax5.jpg) no-repeat 50% 50%/cover fixed;
 }
