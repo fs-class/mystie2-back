@@ -38,6 +38,7 @@
          hh = '0' + (hh - 12);
          ap = ' PM';
       } else if(hh>=10) {
+         hh = hh;
          ap = ' AM';
       } else {
          hh = '0' + hh;
