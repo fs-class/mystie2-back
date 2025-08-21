@@ -59,7 +59,7 @@ const pool = new Pool({
 function isLoggedIn(req, res, next) {
   if (req.session.member) return next();
   return res.send(
-    "<script>alert('로그인이 필요합니다.'); location.href='/login';</script>"
+    "<script>alert('로그인이 필요합니다.'); location.href='/';</script>"
   );
 }
 
