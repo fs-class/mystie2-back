@@ -1,9 +1,9 @@
 @charset "utf-8";
 @import url('reset.css');
-@import url('contactList.css');
 
 /* typo */
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Orbitron');
 
 @font-face {
     font-family: 'Pretendard-Regular';
@@ -11,10 +11,12 @@
     font-weight: 400;
     font-style: normal;
 }
+
 body {
     font-family: "Lato", sans-serif;
     line-height: 1.8;
 }
+
 .ls10 {
     letter-spacing: 10px;
 }
@@ -24,15 +26,220 @@ footer a {
     font-family: 'Pretendard-Regular', Helvetica, sans-serif;
 }
 
+/* logo text transform */
+#logo {
+    z-index: 99999;
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    perspective: 800px;
+    overflow: hidden;
+}
+
+#logo h1 {
+    font-weight: bold;
+    font-size: 60px;
+    color: transparent;
+
+    /* 원근감 */
+    transform: translate(0px, 100px) rotateX(70deg) rotateY(0deg);
+
+    /* 입체 느낌을 더 주는 효과 */
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.2);
+}
+
+@media (min-width: 992px) {
+
+    /* logo text transform */
+    #logo h1 {
+        font-size: 150px;
+
+        /* 원근감 */
+        transform: translate(-350px, 100px) rotateX(0deg) rotateY(70deg);
+
+    }
+}
+
+/* cloud animation */
+#cloud {
+    z-index: 99;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+}
+
+#cloud span {
+    display: inline-block;
+    position: absolute;
+    animation: linear infinite;
+    opacity: 0.8;
+}
+
+#cloud span:nth-of-type(1) {
+    top: 0;
+    left: -1146px;
+    animation-name: cloud1;
+    animation-duration: 110s;
+}
+
+#cloud span:nth-of-type(2) {
+    top: 20px;
+    left: 0px;
+    animation-name: cloud2;
+    animation-duration: 100s;
+}
+
+@keyframes cloud1 {
+    0% {
+        left: -1146px;
+    }
+
+    100% {
+        left: 1950px;
+    }
+}
+
+@keyframes cloud2 {
+    0% {
+        left: 0px;
+    }
+
+    50% {
+        left: 1950px;
+        opacity: 0;
+    }
+
+    50.001% {
+        left: -1840px;
+        opacity: 0.8;
+    }
+
+    100% {
+        left: 0px;
+    }
+}
+
+/* Mobile Frame */
+#mobile {
+    z-index: 9999;
+    position: absolute;
+    top: 120px;
+    right: 50px;
+    width: 960px;
+    height: 679px;
+    background-size: cover;
+}
+
+#mobile {
+    background-image: url(../images/morning_t.png);
+}
+
+/* Mobile Cloud Animation */
+#mobile .cloud {
+    position: absolute;
+    left: 87px;
+    top: 85px;
+    width: 795px;
+    height: 501px;
+    overflow: hidden;
+}
+
+#mobile .cloud span {
+    display: inline-block;
+    position: absolute;
+    animation: linear infinite;
+    opacity: 0.8;
+}
+
+#mobile .cloud span:nth-of-type(1) {
+    top: 30px;
+    left: -600px;
+    animation-name: cloud3;
+    animation-duration: 110s;
+}
+
+#mobile .cloud span:nth-of-type(2) {
+    top: 20px;
+    left: 0px;
+    animation-name: cloud4;
+    animation-duration: 100s;
+}
+
+#mobile .cloud span:nth-of-type(1) img {
+    width: 600px;
+}
+
+#mobile .cloud span:nth-of-type(2) img {
+    width: 700px;
+}
+
+@keyframes cloud3 {
+    0% {
+        left: -600px;
+    }
+
+    100% {
+        left: 540px;
+    }
+}
+
+@keyframes cloud4 {
+    0% {
+        left: 0px;
+    }
+
+    50% {
+        left: 540px;
+        opacity: 0;
+    }
+
+    50.001% {
+        left: -700px;
+        opacity: 1;
+    }
+
+    100% {
+        left: 0px;
+    }
+}
+
+/* Mobile Digital Clock */
+#mobile p {
+    font-family: 'Orbitron', sans-serif;
+    display: inline;
+    position: absolute;
+    top: 100px;
+    left: 100px;
+    font-size: 60px;
+    font-weight: bold;
+    color: #333;
+    padding-left: 50px;
+}
+
+#mobile p:nth-of-type(2) {
+    font-size: 20px;
+    top: 90px;
+    left: 170px;
+}
+
+#mobile p:nth-of-type(1) span:nth-of-type(1) {
+    font-size: 30px;
+}
+
 /* Parallax Scrolling Image */
 #sec1 {
     height: 100vh;
-    background: url(../images/parallax1.jpg) no-repeat 50% 50%/cover fixed;
+    background: url(../images/parallax5.jpg) no-repeat 50% 50%/cover fixed;
 }
+
 #sec3 .parallax_bg {
     height: 400px;
     background: url(../images/parallax4.jpg) no-repeat 50% 50%/cover fixed;
 }
+
 #sec4 .parallax_bg {
     height: 400px;
     background: url(../images/parallax3.jpg) no-repeat 50% 50%/cover fixed;
@@ -47,8 +254,9 @@ footer a {
 #skill p {
     letter-spacing: 4px;
 }
+
 .progress {
-    height:35px;
+    height: 35px;
 }
 
 /* footer */
@@ -59,13 +267,15 @@ footer:hover {
 
 /* 2025-08-12 추가 */
 #mainNavbar {
-    transform:translateY(-100%);
+    z-index: 99999;
+    transform: translateY(-100%);
 }
+
 .navbar-scrolled {
     background-color: white !important;
     transition: 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    transform:translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(0) !important;
 }
 
 
@@ -79,31 +289,33 @@ footer:hover {
 
 /* 전체 스크롤바 설정 */
 ::-webkit-scrollbar {
-  width: 0px; /* 세로 스크롤바 너비 */
-  height: 12px; /* 가로 스크롤바 높이 */
+    width: 0px;
+    /* 세로 스크롤바 너비 */
+    height: 12px;
+    /* 가로 스크롤바 높이 */
 }
 
 /* 스크롤바 트랙 (배경) */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+    background: #f1f1f1;
 }
 
 /* 스크롤바 핸들 (움직이는 부분) */
 ::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 10px;
-  border: 3px solid #f1f1f1;
+    background-color: #888;
+    border-radius: 10px;
+    border: 3px solid #f1f1f1;
 }
 
 /* 스크롤바 핸들 hover 시 */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555;
+    background-color: #555;
 }
 
 /* Firefox 지원 */
 body {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(136,136,136,0.3) transparent;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(136, 136, 136, 0.3) transparent;
 }
 
 

@@ -90,13 +90,13 @@ app.post('/loginProc', async (req, res) => {
       );
     }
     return res.send(
-      "<script>alert('아이디 또는 비밀번호가 틀렸습니다.'); location.href='/login';</script>"
+      "<script>alert('아이디 또는 비밀번호가 틀렸습니다.'); location.href='/index';</script>"
     );
   } catch (err) {
     console.error('loginProc error:', err);
     return res
       .status(500)
-      .send("<script>alert('오류가 발생했습니다.'); location.href='/login';</script>");
+      .send("<script>alert('오류가 발생했습니다.'); location.href='/index';</script>");
   }
 });
 
