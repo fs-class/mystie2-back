@@ -269,6 +269,7 @@ footer:hover {
 
 /* 2025-08-12 추가 */
 #mainNavbar {
+    position: fixed;
     z-index: 99999 !important;
     transform: translateY(-100%);
 }
